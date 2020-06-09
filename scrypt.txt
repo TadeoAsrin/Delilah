@@ -1,0 +1,103 @@
+
+create database DelilahResto;
+use DelilahResto;
+
+CREATE TABLE usuarios(
+	id  INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    usuario VARCHAR(45) NOT NULL UNIQUE,
+    password VARCHAR(45) NOT NULL,
+    nombre VARCHAR(45) NOT NULL,
+    apellido VARCHAR(45) NOT NULL,
+    mail VARCHAR(45) NOT NULL UNIQUE,
+    telefono INT(45) NOT NULL,
+    direccion VARCHAR(45) NOT NULL,
+    es_administrador BIT(1) NOT NULL
+);
+
+CREATE TABLE pedidos(
+	id  INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    idUsuario INT NOT NULL,
+    idFormaDePago INT NOT NULL,
+    idEstado INT,
+    precioTotal DECIMAL(7,2),
+    hora TIME NOT NULL,
+    pagado BIT(1)
+);
+
+CREATE TABLE productos(
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL(7,2) NOT NULL,
+    urlFoto VARCHAR(250) NOT NULL,
+    en_stock BIT(1) NOT NULL
+);
+
+CREATE TABLE detalle_pedido(
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    idPedido INT NOT NULL,
+    idProducto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_total DECIMAL (7,2) NOT NULL
+);
+
+CREATE TABLE formas_de_pago (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    descripcion VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE estados (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    descripcion VARCHAR(45) NOT NULL
+);
+
+
+
+INSERT INTO formas_de_pago (descripcion) VALUES ('efectivo');
+INSERT INTO formas_de_pago (descripcion) VALUES ('crédito');
+INSERT INTO formas_de_pago (descripcion) VALUES ('débito');
+INSERT INTO estados (descripcion) VALUES ('nuevo');
+INSERT INTO estados (descripcion) VALUES ('confirmado');
+INSERT INTO estados (descripcion) VALUES ('preparando');
+INSERT INTO estados (descripcion) VALUES ('enviando');
+INSERT INTO estados (descripcion) VALUES ('cancelado');
+INSERT INTO estados (descripcion) VALUES ('entregado');
+
+INSERT INTO productos (nombre,precio,urlFoto,en_stock) 
+VALUES ('hamburguesa Clasica',250,"https://t1.rg.ltmcdn.com/es/images/0/8/9/img_pan_para_hamburguesa_28980_600.jpg",1);
+
+alter table usuarios 
+modify column telefono varchar(45);
+
+ALTER TABLE pedidos 
+ADD CONSTRAINT FK_PEDIDOS_USUARIOS
+FOREIGN KEY (idUsuario) REFERENCES usuarios(id);
+
+ALTER TABLE pedidos 
+ADD CONSTRAINT FK_PEDIDOS_FORMAS_DE_PAGO
+FOREIGN KEY (idFormaDePago) REFERENCES formas_de_pago(id);
+
+ALTER TABLE pedidos 
+ADD CONSTRAINT FK_PEDIDOS_ESTADO
+FOREIGN KEY (idEstado) REFERENCES estados(id);
+
+ALTER TABLE detalle_pedido
+ADD CONSTRAINT FK_DETALLE_PEDIDO_PEDIDO
+FOREIGN KEY (idPedido) REFERENCES pedidos(id)
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+ALTER TABLE detalle_pedido
+ADD CONSTRAINT FK_DETALLE_PEDIDO_PRODUCTO
+FOREIGN KEY (idProducto) REFERENCES productos(id)
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+select * from productos;
+select * from usuarios;
+select * from estados;
+select * from pedidos;
+select * from detalle_pedido;
+
+update pedidos
+ set pagado = 1
+ where id = 1;

@@ -1,0 +1,35 @@
+LINK DEL REPOSITORIO
+https://github.com/camillarrull/delilah-resto
+
+LINK DOCUMENTACION SWAGGER
+https://app.swaggerhub.com/apis/TadeoAsrin/DelilahResto/1.0.0#/
+
+INSTRUCCIONES
+
+delilah-resto es una API para realizar y adminsitrar pedidos.
+
+
+Recursos y librerías utilizadas:
+
+Node Js
+Express
+Body-parser
+Sequelize
+Moment
+JWT
+Bcrypt
+
+
+
+Recursos:
+
+Node
+MySQL
+Pasos para utilizar la API:
+
+Clonar el repositorio: git clone https://github.com/camillarrull/delilah-resto
+en la consola, npm install
+En el motor de base de datos MySql,pegar el texto del scrypt.txt que se encuentra dentro de la carpeta ProyectoDelilah, En la misma ya se encuentran insertados el usuario administrador ( usuario : tadeoasr , password: tadeo123 ) quien tiene los permisos de administrador para acceder a los distintos endpoints con requisito de adminisitrador y el usuario ( usuario: juan , password: juanroman) quien es un usuario que no cuenta con los permisos de administrador. Tambien se encuentran insertados 2 productos para poder utilizarlos para probar los endpoints de pedidos. 4)En la linea numero 5 del archivo app.js (const sequelize = new Sequelize('mysql://root:tupassword@localhost:3306/delilah'), reemplazar donde dice "tupassword" por la password con la que vos accedes a tu base de datos. 5)Toda la documentacion correspondiente se encuentra 
+en: https://app.swaggerhub.com/apis/TadeoAsrin/DelilahResto/1.0.0#/
+
+Enjoy!
